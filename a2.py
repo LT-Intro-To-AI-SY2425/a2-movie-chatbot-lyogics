@@ -37,7 +37,9 @@ def match(pattern: List[str], source: List[str]) -> List[str]:
                 result.append(combined)
                 return result
             else:
-                return None # placeholder, fix later
+                if pattern[pind-1] == source[sind-1] and pattern[pind+1] == source[sind + 1]:
+                    result.append(source[sind])
+                    return None # placeholder, fix later
         # 3) if we reached the end of the source but not the pattern
         elif sind == len(source):
             return None
