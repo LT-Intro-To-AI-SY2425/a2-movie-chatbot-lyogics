@@ -17,16 +17,17 @@ def match(pattern: List[str], source: List[str]) -> List[str]:
     sind = 0  # current index we are looking at in source list
     pind = 0  # current index we are looking at in pattern list
     result: List[str] = []  # to store substitutions we will return if matched
+    
     # keep checking as long as we haven't hit the end of either pattern or source while
     # pind is still a valid index OR sind is still a valid index (valid index means that
     # the index is != to the length of the list)
     while pind < len(pattern) or sind < len(source):
-
         # your job is to fill out the body of this loop
 
         # 1) if we reached the end of the pattern but not source
-        if pind == len(pattern):
+        if pind == len(pattern) and sind != len(source):
             return None
+        
         # 2) if the current thing in the pattern is a %
         # WARNING: this condition contains the bulk of the code for the assignment
         # If you get stuck on this one, we encourage you to attempt the other conditions
@@ -35,11 +36,18 @@ def match(pattern: List[str], source: List[str]) -> List[str]:
             if pind == len(pattern)-1:
                 combined = " ".join(source[sind:])
                 result.append(combined)
+                # pind += 1
+                # sind = len(source)
                 return result
             else:
-                if pattern[pind-1] == source[sind-1] and pattern[pind+1] == source[sind + 1]:
-                    result.append(source[sind])
-                    return None # placeholder, fix later
+                pind += 1
+                accum = ""
+                while pattern[pind] != source[sind]:
+                    accum += source[sind] + ""
+                    sind += 1
+                    if sind == len(source):
+                        return None
+                result.append(accum.rstrip())     
         # 3) if we reached the end of the source but not the pattern
         elif sind == len(source):
             return None
@@ -53,6 +61,7 @@ def match(pattern: List[str], source: List[str]) -> List[str]:
         elif pattern[pind] == source[sind]:
             pind += 1
             sind += 1
+        
         # 6) else : this will happen if none of the other conditions are met it
         # indicates the current thing it pattern doesn't match the current thing in
         # source
