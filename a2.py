@@ -33,9 +33,9 @@ def match(pattern: List[str], source: List[str]) -> List[str]:
         # If you get stuck on this one, we encourage you to attempt the other conditions
         #   and come back to this one afterwards
         elif pattern[pind] == '%':
-            if pind == len(pattern)-1:
-                combined = " ".join(source[sind:])
-                result.append(combined)
+            if pind == len(pattern) - 1:
+                res = " ".join(source[sind:])
+                result.append(res)
                 # pind += 1
                 # sind = len(source)
                 return result
@@ -43,11 +43,11 @@ def match(pattern: List[str], source: List[str]) -> List[str]:
                 pind += 1
                 accum = ""
                 while pattern[pind] != source[sind]:
-                    accum += source[sind] + ""
+                    accum += source[sind] + " "
                     sind += 1
                     if sind == len(source):
                         return None
-                result.append(accum.rstrip())     
+                result.append(accum.rstrip())    
         # 3) if we reached the end of the source but not the pattern
         elif sind == len(source):
             return None
